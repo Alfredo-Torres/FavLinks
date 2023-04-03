@@ -1,30 +1,38 @@
 import { useState } from 'react'
-// import Table from './Table';
-// import Form from './Form';
+import Form from './Form';
+import Table from './Table';
 
 const LinkContainer = (props) => {
+  const [tasks, setTasks] = useState([]);
+  const [name, setName] = useState('')
+  const [links , setLink] = useState('')
+
   const handleRemove = (index) => {
-    /*
-            TODO - Create logic for setting the state to filter array and remove favLink at index
-        */
+    const updatedTasks = [...tasks];
+    updatedTasks.splice(index, 1);
+    setTasks(updatedTasks);
   }
 
-  const handleSubmit = (favLink) => {
-    /*
-            TODO - Create logic to set state and add new favLink to favLinks array in state
-        */
+  const handleSubmit = () => {
+    if(name == '' && links == ''){
+      alert('Please Fill All Fields')
+    }
+    if(name != '' && links != ''){
+      const obj = {name:name , links:links}
+      setTasks([...tasks, obj]);
+      setName('')
+      setLink('')
+    }
   }
 
   return (
-    <div className="container">
-      <h1>My Favorite Links</h1>
-      <p>Add a new url with a name and link to the table.</p>
-      {/*TODO - Add Table Component */}
-
+    <div className="container" style={{display:'block'}}>
+      <h1 style={{marginLeft:'210px'}}>My Favorite Links</h1>
+      <p style={{marginLeft:'210px'}}>Add a new url with a name and link to the table.</p>
+          <Table removeLink={handleRemove} linkData={tasks}/>
       <br />
-
-      <h3>Add New</h3>
-      {/*TODO - Add Form Component */}
+      <h3 style={{marginLeft:'210px'}}>Add New</h3>    
+        <Form handleSubmit={handleSubmit} setName={setName} name={name} links={links} setLink={setLink}/>
     </div>
   )
 }
