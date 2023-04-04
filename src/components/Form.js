@@ -1,56 +1,39 @@
-import React, { Component } from "react";
+import { useState } from 'react'
 
-class Form extends Component {
-  render() {
-    const { handleSubmit, setName, name, links, setLink } = this.props;
-    return (
-      <form onSubmit={(e) => {
-        e.preventDefault();
-        handleSubmit();
-      }}>
-        <div style={{ marginLeft: '210px' }}>
-          <div style={{marginBottom:'12px' ,}}>
-          <div style={{ fontSize: '16px' , fontWeight:500, marginBottom:'6px' }}> Name </div>
-            <input
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-              type="name"
-              name="task"
-              style={{ width: '80%', padding: '10px',borderRadius:'3px' }}
-            />
-          </div>
-          <div>
-            <div style={{ fontSize: '16px' , fontWeight:500 , marginBottom:'6px'}}> URL </div>
-            <input
-              value={links}
-              onChange={(event) => setLink(event.target.value)}
-              type="link"
-              name="link"
-              style={{ width: '80%', padding: '10px',borderRadius:'3px' }}
-            />
-          </div>
-          <div style={{ width: '40px', height: '50px', marginTop: '6px' }}>
-            <button
-              type="submit"
-              style={{
-                backgroundColor: '#318CE7',
-                color: 'white',
-                border: 'none',
-                fontSize: '14px',
-                fontWeight:'bold',
-                width: '75px',
-                height: '35px',
-                cursor:'pointer',
-                borderRadius:'3px'
-              }}
-            >
-              Submit
-            </button>
-          </div>
-        </div>
-      </form>
-    );
+const Form = () => {
+  const handleChange = (event) => {
+    // 
+    if(event.target.id === "link")
+    // update linkname in state
+    this.setState({ linkName: event.target.value});
+    else
+    this.setState({ url: event.target.value});
   }
+
+  const onFormSubmit = (event) => {
+    // to prevent page reload on form submit
+  
+    event.preventDefault()
+
+    // addNew was passed as props from LinkContainer
+    let newFavLink = {linkName: this.state.linkName, url: this.state.url};
+
+    this.props.addNew(newFavLink);
+
+    // resets the states
+    this.setState({ linkName: '', url: ''});
+  }
+
+  return (
+    <form>
+      {/* TODO - Logic for returning a form element with labels and inputs for link name and URL */}
+      <label for="link">Link Name:</label>
+
+      <input type="text" id="link" onChange={(event) => this.handleChange(event)} />
+
+      <button type="submit" onClick= {() =>this.onFormSubmit()}>Submit</button>
+    </form>
+  )
 }
 
-export default Form;
+export default Form

@@ -33,16 +33,21 @@ const TableBody = (props) => {
   return <tbody>{rows}</tbody>
 }
 
-const Table = ({linkData,removeLink}) => {
-  {
+const Table = (props) => {
+  
     /*TODO - return <table> component, TableHeader and TableBody  and pass props!*/
-    return<div style={{marginLeft:'210px'}}>
-    <table style={{width:'82%',borderCollapse:'collapse'}}>
-      <TableHeader/>
-      <TableBody linkData={linkData} removeLink={removeLink}/>
-    </table>
-    </div> 
+    const Table = (props) => {
+      return (
+      <div>
+      {TableHeader()}
+      {TableBody(props)}
+      </div>
+      )
+      }
+
+
+    return <table></table>
   }
-}
+
 
 export default Table
